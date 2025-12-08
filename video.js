@@ -1,3 +1,5 @@
+// —— LISTA DE STREAMS ——
+// Ahora cada vídeo puede ser HLS (.m3u8)
 const videosBase = [
     {
         id: 0,
@@ -5,13 +7,9 @@ const videosBase = [
         streamer: "ProGamer_Alex",
         game: "Dark Souls III",
         img: "img/alex.jpg",
-        video: "vid/ds3.mp4",
-        description: "Alex intenta batir el récord mundial de Dark Souls III con una ruta ultra agresiva. Estrategias avanzadas, esquivas perfectas y cero margen de error.",
-        comments: [
-            "Qué guay",
-            "El despertar de Aurora",
-            "Alex siempre rompiendo récords."
-        ]
+        video: "streams/ds3.m3u8",
+        description: "Alex intenta batir el récord mundial de Dark Souls III...",
+        comments: ["Qué guay", "El despertar de Aurora", "Alex siempre rompiendo récords."]
     },
     {
         id: 1,
@@ -19,12 +17,9 @@ const videosBase = [
         streamer: "Luna_Gaming",
         game: "TOTK",
         img: "img/luna.jpg",
-        video: "vid/zelda.mp4",
-        description: "Acompaña a Luna mientras descubre secretos ocultos en el inmenso mundo de Tears of the Kingdom. Rutas alternativas, cuevas ocultas y zonas misteriosas.",
-        comments: [
-            "El paisaje es precioso 😍",
-            "Luna siempre encuentra los secretos."
-        ]
+        video: "streams/zelda.m3u8",
+        description: "Acompaña a Luna mientras descubre secretos ocultos...",
+        comments: ["El paisaje es precioso 😍", "Luna siempre encuentra los secretos."]
     },
     {
         id: 2,
@@ -32,38 +27,49 @@ const videosBase = [
         streamer: "ElMaestroFIFA",
         game: "FIFA 24",
         img: "img/fifa.jpg",
-        video: "vid/fifa.mp4",
-        description: "Partida decisiva del torneo internacional en FIFA 24. Tácticas avanzadas, presión alta y jugadas increíbles al borde del infarto.",
-        comments: [
-            "Golazo en el minuto 90 ⚽🔥",
-            "Este torneo está muy tenso."
-        ]
+        video: "streams/fifa.m3u8",
+        description: "Partida decisiva del torneo internacional...",
+        comments: ["Golazo en el 90 ⚽🔥", "Este torneo está muy tenso."]
     }
 ];
 
+// —— CARGAR VIDEO SEGÚN ID —— 
 document.addEventListener("DOMContentLoaded", () => {
     const params = new URLSearchParams(window.location.search);
-    const id = parseInt(params.get("id"));
+    const id = parseInt(params.get("id")) || 0;
     const v = videosBase[id];
 
-    // CARGAR VIDEO E INFO
-    document.getElementById("video-player").src = v.video;
+    const videoEl = document.getElementById("video-player");
+
+    // —— SOPORTE HLS —— 
+    if (Hls.isSupported()) {
+        const hls = new Hls();
+        hls.loadSource(v.video);
+        hls.attachMedia(videoEl);
+        hls.on(Hls.Events.MANIFEST_PARSED, () => videoEl.play());
+    } else if (videoEl.canPlayType("application/vnd.apple.mpegurl")) {
+        // Safari lo soporta nativo
+        videoEl.src = v.video;
+        videoEl.play();
+    }
+
+    // —— INFO DEL VIDEO —— 
     document.getElementById("video-title").textContent = v.title;
     document.getElementById("video-avatar").src = v.img;
     document.getElementById("video-streamer").textContent = v.streamer;
     document.getElementById("video-game").textContent = v.game;
     document.getElementById("video-description").textContent = v.description;
 
-    // CARGAR COMENTARIOS
+    // —— COMENTARIOS —— 
     const box = document.getElementById("comments-box");
     v.comments.forEach(c => box.innerHTML += `<p class="comment">${c}</p>`);
 
-    // AÑADIR NUEVO COMENTARIO
+    // —— ENVIAR COMENTARIO —— 
     document.getElementById("comment-btn").addEventListener("click", () => {
         const input = document.getElementById("comment-input");
         if (input.value.trim() === "") return;
 
-        box.innerHTML += `<p class="comment">${input.value}</p>`;
+        box.innerHTML += `<p class='comment'>${input.value}</p>`;
         input.value = "";
     });
 });
