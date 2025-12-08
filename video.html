@@ -7,6 +7,7 @@
     <title>GamersHub - Video</title>
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
     <style>
         body {
             background: #2c2c3e !important;
@@ -33,110 +34,6 @@
             width: 42px;
             height: 42px;
             border-radius: 8px;
-            object-fit: cover;
-        }
-
-        .nav-item-hover {
-            color: #e0e0e0 !important;
-            transition: 0.25s ease;
-        }
-
-        .nav-item-hover:hover {
-            color: white !important;
-        }
-
-        .sidebar {
-            min-height: 100vh;
-            background: #111119;
-            border-right: 1px solid #262636;
-        }
-
-        .avatar {
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            object-fit: cover;
-        }
-
-        .cat-item a {
-            color: #cfcfcf;
-            text-decoration: none;
-            display: block;
-            padding: 8px 0;
-            transition: 0.2s ease;
-        }
-
-        .cat-item a:hover {
-            color: #b388ff !important;
-        }
-
-        .hero-img {
-            width: 100%;
-            height: 420px;
-            object-fit: cover;
-            opacity: 0.35;
-        }
-
-        .stream-card {
-            background: #14141c;
-            border-radius: 12px;
-            overflow: hidden;
-            position: relative;
-            transition: 0.25s ease;
-            box-shadow: 0 0 14px rgba(0, 0, 0, 0.5);
-        }
-
-        .stream-card:hover {
-            transform: translateY(-6px);
-            box-shadow: 0 0 20px rgba(179, 136, 255, 0.4);
-        }
-
-        .stream-thumb {
-            width: 100%;
-            height: 180px;
-            object-fit: cover;
-        }
-
-        .live-tag {
-            position: absolute;
-            top: 10px;
-            left: 10px;
-        }
-
-        .views {
-            background: rgba(255, 255, 255, 0.1);
-            padding: 6px 10px;
-            border-radius: 8px;
-        }
-
-        .btn-gradient {
-            background: linear-gradient(90deg, #8B5CF6 0%, #6366F1 100%);
-            border: none;
-            color: white;
-            border-radius: 40px;
-            transition: 0.25s ease;
-        }
-
-        .btn-gradient:hover {
-            filter: brightness(1.12);
-            transform: translateY(-2px);
-        }
-
-        .video-wrapper video {
-            border-radius: 12px;
-            background: black;
-        }
-
-        .comments-box {
-            background: #14141c;
-            height: 380px;
-            overflow-y: auto;
-            border: 1px solid #2b2b3c;
-        }
-
-        .comment {
-            padding: 8px 0;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.07);
         }
 
         .video-wrapper {
@@ -154,16 +51,47 @@
             object-fit: cover;
         }
 
+        .video-description {
+            background: #1b1b27;
+            border: 1px solid #2f2f44;
+            border-radius: 12px;
+            padding: 18px;
+            margin-top: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.35);
+            color: #d8d8e8;
+        }
+
+        .avatar {
+            width: 46px;
+            height: 46px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+
         .comments-box {
             background: #14141c;
-            height: 500px;
+            height: 520px;
             overflow-y: auto;
             border: 1px solid #2b2b3c;
+            border-radius: 12px;
         }
 
         .comment {
-            padding: 8px 0;
+            padding: 10px 0;
             border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+        }
+
+        .btn-gradient {
+            background: linear-gradient(90deg, #8B5CF6 0%, #6366F1 100%);
+            border: none;
+            color: white;
+            border-radius: 40px;
+            transition: 0.25s ease;
+        }
+
+        .btn-gradient:hover {
+            filter: brightness(1.12);
+            transform: translateY(-2px);
         }
 
         @media (max-width: 768px) {
@@ -171,25 +99,23 @@
                 height: 40vh;
             }
         }
-
-        .video-description {
-            background: #1b1b27;
-            border: 1px solid #2f2f44;
-            color: #d8d8e8;
-            font-size: 1rem;
-            line-height: 1.5;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.35);
-        }
     </style>
 
-    <!-- hls.js -->
     <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
     <script>
         document.addEventListener("DOMContentLoaded", () => {
 
-            // Leer la URL de streaming desde ?url=
             const params = new URLSearchParams(window.location.search);
+
             const url = params.get("url");
+            const title = params.get("title") || "Vídeo en directo";
+            const streamer = params.get("streamer") || "Streamer";
+            const game = params.get("game") || "Juego";
+
+            // Insertar datos en la interfaz
+            document.getElementById("video-title").textContent = title;
+            document.getElementById("video-streamer").textContent = streamer;
+            document.getElementById("video-game").textContent = game;
 
             const video = document.getElementById("video-player");
 
@@ -198,21 +124,36 @@
                 return;
             }
 
-            // —— hls.js para Chrome, Edge, Firefox ——
+            // HLS
             if (Hls.isSupported()) {
                 const hls = new Hls();
                 hls.loadSource(url);
                 hls.attachMedia(video);
                 hls.on(Hls.Events.MANIFEST_PARSED, () => video.play());
-
-                // —— Safari (HLS nativo) ——
             } else if (video.canPlayType("application/vnd.apple.mpegurl")) {
                 video.src = url;
                 video.play();
             }
 
-        });
+            // Comentarios
+            const commentsBox = document.getElementById("comments-box");
+            const input = document.getElementById("comment-input");
+            const btn = document.getElementById("comment-btn");
 
+            btn.addEventListener("click", () => {
+                const text = input.value.trim();
+                if (text === "") return;
+
+                const div = document.createElement("div");
+                div.className = "comment";
+                div.innerHTML = `<p class="mb-0"><strong>Tú:</strong> ${text}</p>`;
+
+                commentsBox.appendChild(div);
+                input.value = "";
+                commentsBox.scrollTop = commentsBox.scrollHeight;
+            });
+
+        });
     </script>
 </head>
 
@@ -233,24 +174,44 @@
     <div class="container-fluid py-4">
         <div class="row">
 
+            <!-- VIDEO -->
             <div class="col-lg-9 mb-4">
-                <div class="video-wrapper rounded shadow-lg overflow-hidden">
-                    <video id="video-player" controls autoplay class="w-100"></video>
+                <div class="video-wrapper shadow-lg">
+                    <video id="video-player" controls autoplay></video>
                 </div>
 
-                <h2 class="fw-bold mt-4">Vídeo en directo</h2>
+                <!-- INFO DEL VIDEO -->
+                <div class="mt-4">
+                    <h2 id="video-title" class="fw-bold"></h2>
+
+                    <div class="d-flex align-items-center gap-3 mt-3">
+                        <img src="img/alex.jpg" class="avatar">
+                        <div>
+                            <p class="m-0 fw-bold" id="video-streamer"></p>
+                            <p class="text-secondary small m-0" id="video-game"></p>
+                        </div>
+                    </div>
+
+                    <div class="video-description mt-4">
+                        <h5 class="fw-semibold">Descripción</h5>
+                        <p class="mt-2 mb-0">
+                            Disfruta del streaming en directo con el creador del contenido. Aquí podrás ver partidas,
+                            conocer estrategias, aprender trucos y pasarlo genial viendo a tu streamer favorito jugar a su videojuego.
+                        </p>
+                    </div>
+                </div>
             </div>
 
+            <!-- COMENTARIOS -->
             <div class="col-lg-3">
                 <h4 class="fw-bold mb-3">Comentarios</h4>
 
-                <div id="comments-box" class="comments-box p-3 rounded"></div>
+                <div id="comments-box" class="comments-box p-3"></div>
 
                 <div class="mt-3 d-flex">
                     <input id="comment-input" class="form-control me-2" placeholder="Escribe un comentario...">
                     <button id="comment-btn" class="btn btn-gradient px-4">Enviar</button>
                 </div>
-
             </div>
 
         </div>

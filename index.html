@@ -34,7 +34,6 @@
             width: 42px;
             height: 42px;
             border-radius: 8px;
-            object-fit: cover;
         }
 
         .nav-item-hover {
@@ -56,7 +55,6 @@
             width: 40px;
             height: 40px;
             border-radius: 50%;
-            object-fit: cover;
         }
 
         .cat-item a {
@@ -82,9 +80,7 @@
             background: #14141c;
             border-radius: 12px;
             overflow: hidden;
-            position: relative;
             transition: 0.25s ease;
-            box-shadow: 0 0 14px rgba(0, 0, 0, 0.5);
         }
 
         .stream-card:hover {
@@ -98,12 +94,6 @@
             object-fit: cover;
         }
 
-        .live-tag {
-            position: absolute;
-            top: 10px;
-            left: 10px;
-        }
-
         .views {
             background: rgba(255, 255, 255, 0.1);
             padding: 6px 10px;
@@ -115,83 +105,16 @@
             border: none;
             color: white;
             border-radius: 40px;
-            transition: 0.25s ease;
-        }
-
-        .btn-gradient:hover {
-            filter: brightness(1.12);
-            transform: translateY(-2px);
-        }
-
-        .video-wrapper video {
-            border-radius: 12px;
-            background: black;
-        }
-
-        .comments-box {
-            background: #14141c;
-            height: 380px;
-            overflow-y: auto;
-            border: 1px solid #2b2b3c;
-        }
-
-        .comment {
-            padding: 8px 0;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.07);
-        }
-
-        .video-wrapper {
-            width: 100%;
-            height: 65vh;
-            max-height: 780px;
-            border-radius: 14px;
-            overflow: hidden;
-            background: black;
-        }
-
-        .video-wrapper video {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-
-        .comments-box {
-            background: #14141c;
-            height: 500px;
-            overflow-y: auto;
-            border: 1px solid #2b2b3c;
-        }
-
-        .comment {
-            padding: 8px 0;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.07);
-        }
-
-        @media (max-width: 768px) {
-            .video-wrapper {
-                height: 40vh;
-            }
-        }
-
-        .video-description {
-            background: #1b1b27;
-            border: 1px solid #2f2f44;
-            color: #d8d8e8;
-            font-size: 1rem;
-            line-height: 1.5;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.35);
         }
     </style>
-
 
 </head>
 
 <body>
 
     <nav class="navbar navbar-dark px-4 sticky-top shadow-sm glass-header">
-
         <div class="d-flex align-items-center gap-2">
-            <img src="img/logo.svg" class="logo-square" alt="Logo GamersHub">
+            <img src="img/logo.svg" class="logo-square">
             <span class="brand fs-4 fw-bold">GamersHub</span>
         </div>
 
@@ -199,41 +122,26 @@
             <a class="nav-link nav-item-hover fs-5" href="index.html">Inicio</a>
             <a class="nav-link nav-item-hover fs-5" href="category.html">Categorías</a>
         </div>
-
     </nav>
 
     <div class="container-fluid">
         <div class="row">
 
+            <!-- SIDEBAR -->
             <aside class="col-12 col-md-3 col-lg-2 p-4 sidebar">
-
                 <h6 class="text-uppercase text-secondary mb-3">En directo</h6>
 
-                <div class="live-channel d-flex align-items-center mb-3">
+                <!-- ÚNICO DIRECTO REAL -->
+                <div class="live-channel d-flex align-items-center mb-4">
                     <img src="img/alex.jpg" class="avatar me-2">
                     <div>
                         <p class="m-0 fw-bold">ProGamer_Alex</p>
-                        <span class="text-secondary small">15.234</span>
-                    </div>
-                </div>
-
-                <div class="live-channel d-flex align-items-center mb-3">
-                    <img src="img/luna.jpg" class="avatar me-2">
-                    <div>
-                        <p class="m-0 fw-bold">Luna_Gaming</p>
-                        <span class="text-secondary small">8456</span>
-                    </div>
-                </div>
-
-                <div class="live-channel d-flex align-items-center mb-4">
-                    <img src="img/strategist.jpg" class="avatar me-2">
-                    <div>
-                        <p class="m-0 fw-bold">StrategistPro</p>
-                        <span class="text-secondary small">5621</span>
+                        <span class="text-secondary small">15.234 espectadores</span>
                     </div>
                 </div>
 
                 <h6 class="text-uppercase text-secondary mt-4 mb-2">Categorías</h6>
+
                 <ul class="list-unstyled">
                     <li class="cat-item"><a href="category.html?cat=aventura">Aventura</a></li>
                     <li class="cat-item"><a href="category.html?cat=accion">Acción</a></li>
@@ -242,18 +150,19 @@
                     <li class="cat-item"><a href="category.html?cat=deportes">Deportes</a></li>
                     <li class="cat-item"><a href="category.html?cat=indie">Indie</a></li>
                 </ul>
-
             </aside>
 
+            <!-- MAIN -->
             <main class="col-12 col-md-9 col-lg-10 p-4">
 
+                <!-- HERO -->
                 <div class="hero position-relative mb-5 rounded shadow-lg overflow-hidden">
                     <img src="img/ds3.jpg" class="hero-img">
-                    <div class="hero-info position-absolute top-0 start-0 p-4">
 
+                    <div class="hero-info position-absolute top-0 start-0 p-4">
                         <span class="badge bg-danger px-3 py-2">EN DIRECTO</span>
 
-                        <h1 class="fw-bold mt-3 hero-title">Récord mundial — Speedrun en directo</h1>
+                        <h1 class="fw-bold mt-3">Récord mundial — Speedrun en directo</h1>
 
                         <div class="d-flex align-items-center gap-2 mt-3">
                             <img src="img/alex.jpg" class="avatar">
@@ -263,55 +172,53 @@
                             </div>
                         </div>
 
-                        <a href="video.html?url=http://localhost:8080/ds3/master.m3u8"
+                        <a href="video.html?url=http://localhost:8080/ds3/master.m3u8&title=Récord mundial — Speedrun&streamer=ProGamer_Alex&game=Dark Souls III"
                             class="btn btn-gradient mt-4 px-5 py-2 shadow-lg">Ver ahora</a>
                     </div>
                 </div>
 
-                <h2 class="fw-bold mb-3">Directos ahora mismo</h2>
+                <!-- STREAMING -->
+                <h2 class="fw-bold mb-3">Vídeos en streaming</h2>
 
                 <div class="row g-4">
 
                     <div class="col-md-4">
-                        <a href="video.html?url=http://localhost:8080/hls/stream_BG_1/index.m3u8"
+                        <a href="video.html?url=http://localhost:8080/hls/stream_BG_1/index.m3u8&title=Speedrun mundial&streamer=ProGamer_Alex&game=Dark Souls III"
                             class="text-decoration-none text-white">
                             <div class="stream-card">
                                 <img src="img/ds3.jpg" class="stream-thumb">
-                                <span class="live-tag badge bg-danger">LIVE</span>
-                                <div class="stream-info p-3">
+                                <div class="p-3">
                                     <h5 class="fw-bold">Speedrun mundial</h5>
                                     <p class="small">ProGamer_Alex · Dark Souls III</p>
-                                    <span class="views small">🔴 15.2K</span>
+                                    <span class="views small">15.2K</span>
                                 </div>
                             </div>
                         </a>
                     </div>
 
                     <div class="col-md-4">
-                        <a href="video.html?url=http://localhost:8080/hls/stream_BG_2/index.m3u8"
+                        <a href="video.html?url=http://localhost:8080/hls/stream_BG_2/index.m3u8&title=Explorando el mapa&streamer=Luna_Gaming&game=TOTK"
                             class="text-decoration-none text-white">
                             <div class="stream-card">
                                 <img src="img/zelda.jpg" class="stream-thumb">
-                                <span class="live-tag badge bg-danger">LIVE</span>
-                                <div class="stream-info p-3">
+                                <div class="p-3">
                                     <h5 class="fw-bold">Explorando el mapa</h5>
                                     <p class="small">Luna_Gaming · TOTK</p>
-                                    <span class="views small">🔴 8.5K</span>
+                                    <span class="views small">8.5K</span>
                                 </div>
                             </div>
                         </a>
                     </div>
 
                     <div class="col-md-4">
-                        <a href="video.html?url=http://localhost:8080/hls/stream_ER_1/index.m3u8"
+                        <a href="video.html?url=http://localhost:8080/hls/stream_ER_1/index.m3u8&title=Torneo final&streamer=ElMaestroFIFA&game=FIFA 24"
                             class="text-decoration-none text-white">
                             <div class="stream-card">
                                 <img src="img/fifa.jpg" class="stream-thumb">
-                                <span class="live-tag badge bg-danger">LIVE</span>
-                                <div class="stream-info p-3">
+                                <div class="p-3">
                                     <h5 class="fw-bold">Torneo final</h5>
                                     <p class="small">ElMaestroFIFA · FIFA 24</p>
-                                    <span class="views small">🔴 12.8K</span>
+                                    <span class="views small">12.8K</span>
                                 </div>
                             </div>
                         </a>
